@@ -2,8 +2,8 @@
 const {
   Model
 } = require('sequelize');
-const pessoas = (sequelize, DataTypes) => {
-  class Pessoas extends Model {
+module.exports = (sequelize, DataTypes) => {
+  class Niveis extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,16 +13,11 @@ const pessoas = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Pessoas.init({
-    nome: DataTypes.STRING,
-    ativo: DataTypes.BOOLEAN,
-    email: DataTypes.STRING,
-    role: DataTypes.STRING
+  Niveis.init({
+    descr_nivel: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Pessoas',
+    modelName: 'Niveis',
   });
-  return Pessoas;
+  return Niveis;
 };
-
-module.exports = pessoas
