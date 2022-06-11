@@ -1,5 +1,7 @@
 import { Router } from 'express';
+
 import PessoaController from './../controllers/PessoaController.js';
+import MatriculaController from './../controllers/MatriculaController.js';
 
 const router = Router();
 
@@ -10,9 +12,9 @@ router
   .put('/pessoas/:id', PessoaController.atualizarPessoa)
   .delete('/pessoas/:id', PessoaController.deletarPessoa)
 
-  .get('/pessoas/:idEstudante/matriculas/:idMatricula', PessoaController.pegarMatricula)
-  .post('/pessoas/:idEstudante/matriculas', PessoaController.criarMatricula)
-  .put('/pessoas/:idEstudante/matriculas/:idMatricula', PessoaController.atualizarMatricula)
-  .delete('/pessoas/:idEstudante/matriculas/:idMatricula', PessoaController.deletarMatricula)
+  .get('/pessoas/:idEstudante/matriculas/:idMatricula', MatriculaController.pegarMatricula)
+  .post('/pessoas/:idEstudante/matriculas', MatriculaController.criarMatricula)
+  .put('/pessoas/:idEstudante/matriculas/:idMatricula', MatriculaController.atualizarMatricula)
+  .delete('/pessoas/:idEstudante/matriculas/:idMatricula', MatriculaController.deletarMatricula)
 
 export default router;
