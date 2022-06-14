@@ -19,14 +19,38 @@ const pessoas = (sequelize, DataTypes) => {
     }
   }
   Pessoas.init({
-    nome: DataTypes.STRING,
+    nome: {
+      type: DataTypes.STRING,
+      validate: {
+        funcaoValidadora: (dado) => {
+          if(dado.length < 3)
+            throw new Error('O campo deve ter mais de 3 caracteres!')
+        }
+      }
+    },
     ativo: DataTypes.BOOLEAN,
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: {
+          args: true,
+          msg: 'Dados do tipo e-mail inválidos!'
+        }
+      }
+    },
     role: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Pessoas',
-    paranoid: true
+    paranoid: true,
+    defaultScope: {
+      where: {ativo: true}
+    },
+    scopes: {
+      todos: {
+        where: {}
+      }
+    }
   });
   return Pessoas;
 };

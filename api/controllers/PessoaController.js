@@ -4,9 +4,20 @@ const Pessoas = database.Pessoas;
 
 class PessoaController {
 
-  static async pegaTodasAsPessoas(req, res) {
+  static async pegaTodasAsPessoasAtivas(req, res) {
     try {
       const pessoas = await Pessoas.findAll();
+      return res.status(200).json(pessoas);
+
+    } catch(error) {
+      return res.status(500)
+        .json({message: `${error.message} - Erro ao buscar lista de Pessoas!`})
+    }
+  }
+
+  static async pegaTodasAsPessoas(req, res) {
+    try {
+      const pessoas = await Pessoas.scope('todos').findAll();
       return res.status(200).json(pessoas);
 
     } catch(error) {

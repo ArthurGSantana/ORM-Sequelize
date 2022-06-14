@@ -6,7 +6,8 @@ import MatriculaController from './../controllers/MatriculaController.js';
 const router = Router();
 
 router
-  .get('/pessoas', PessoaController.pegaTodasAsPessoas)
+  .get('/pessoas', PessoaController.pegaTodasAsPessoasAtivas)
+  .get('/pessoas/todas', PessoaController.pegaTodasAsPessoas)
   .get('/pessoas/:id', PessoaController.pegarPessoa)
   .post('/pessoas', PessoaController.criarPessoa)
   .post('/pessoas/:id/restaurar', PessoaController.restaurarPessoa)
