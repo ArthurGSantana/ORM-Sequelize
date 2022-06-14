@@ -89,6 +89,25 @@ class MatriculaController {
         .json({message: `${error.message} - Erro ao atualizar Matricula!`});
     }
   }
+
+  static async restaurarMatricula(req, res) {
+    const {id} = req.params;
+
+    try {
+      await Matriculas.restore({
+        where: {
+          id: Number(id)
+        }
+      })
+
+      return res.status(200)
+        .json({message: `id ${id} foi restaurado em Matriculas!`})
+
+    } catch(error) {
+      return res.status(500)
+        .json({message: `${error.message} - Erro ao restaurar Matricula!`});
+    }
+  }
 }
 
 export default MatriculaController;

@@ -91,6 +91,25 @@ class PessoaController {
         .json({message: `${error.message} - Erro ao atualizar Pessoa!`});
     }
   }
+
+  static async restaurarPessoa(req, res) {
+    const {id} = req.params;
+
+    try {
+      await Pessoas.restore({
+        where: {
+          id: Number(id)
+        }
+      })
+
+      return res.status(200)
+        .json({message: `id ${id} foi restaurado em Pessoas!`})
+
+    } catch(error) {
+      return res.status(500)
+        .json({message: `${error.message} - Erro ao restaurar Pessoa!`});
+    }
+  }
 }
 
 export default PessoaController;

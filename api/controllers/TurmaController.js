@@ -89,6 +89,25 @@ class TurmaController {
         .json({message: `${error.message} - Erro ao atualizar Turma!`});
     }
   }
+
+  static async restaurarTurma(req, res) {
+    const {id} = req.params;
+
+    try {
+      await Turmas.restore({
+        where: {
+          id: Number(id)
+        }
+      })
+
+      return res.status(200)
+        .json({message: `id ${id} foi restaurado em Turmas!`})
+
+    } catch(error) {
+      return res.status(500)
+        .json({message: `${error.message} - Erro ao restaurar Turma!`});
+    }
+  }
 }
 
 export default TurmaController;

@@ -5,9 +5,10 @@ const router = Router();
 
 router
   .get('/turmas', TurmaController.pegaTodasAsTurmas)
-  // .get('/turmas/:id', TurmaController.pegaNivel)
-  // .post('/turmas', TurmaController.criaNivel)
-  // .put('/turmas/:id', TurmaController.atualizaNivel)
-  // .delete('/turmas/:id', TurmaController.deletaNivel)
+  .get('/turmas/:id', TurmaController.pegarTurma)
+  .post('/turmas', TurmaController.criarTurma)
+  .post('/turmas/:id/restaurar', TurmaController.restaurarTurma)
+  .put('/turmas/:id', TurmaController.atualizarTurma)
+  .delete('/turmas/:id', TurmaController.deletarTurma)
 
 export default router;

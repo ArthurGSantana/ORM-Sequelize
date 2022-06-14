@@ -26,6 +26,7 @@ const pessoas = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Pessoas',
+    paranoid: true
   });
   return Pessoas;
 };
