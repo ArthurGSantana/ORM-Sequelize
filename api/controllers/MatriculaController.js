@@ -1,6 +1,7 @@
 import database from '../models/index.js';
 
 const Matriculas = database.Matriculas;
+const Pessoas = database.Pessoas;
 
 class MatriculaController {
 
@@ -106,6 +107,26 @@ class MatriculaController {
     } catch(error) {
       return res.status(500)
         .json({message: `${error.message} - Erro ao restaurar Matricula!`});
+    }
+  }
+
+  static async pegarMatriculasDeEstudante(req, res) {
+    const {idEstudante} = req.params;
+
+    try {
+      const pessoa = await Pessoas.findOne({
+        where: {
+          id: Number(idEstudante)
+        }
+      })
+
+      const matriculas = await pessoa.getAulasMatriculadas();
+
+      return res.status(200).json(matriculas);
+
+    } catch(error) {
+      return res.status(500)
+        .json({message: `${error.message} - Erro ao buscar Matriculas do Estudante!`});
     }
   }
 }

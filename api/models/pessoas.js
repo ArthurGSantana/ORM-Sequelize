@@ -14,7 +14,11 @@ const pessoas = (sequelize, DataTypes) => {
         foreignKey: 'docente_id'
       });
       Pessoas.hasMany(models.Matriculas, {
-        foreignKey: 'estudante_id'
+        foreignKey: 'estudante_id',
+        scope: {
+          status: 'confirmado'
+        },
+        as: 'aulasMatriculadas'
       });
     }
   }
@@ -24,7 +28,7 @@ const pessoas = (sequelize, DataTypes) => {
       validate: {
         funcaoValidadora: (dado) => {
           if(dado.length < 3)
-            throw new Error('O campo deve ter mais de 3 caracteres!')
+            throw new Error('O campo deve ter mais de 3 caracteres!');
         }
       }
     },

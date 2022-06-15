@@ -15,6 +15,7 @@ router
   .delete('/pessoas/:id', PessoaController.deletarPessoa)
 
   .get('/pessoas/:idEstudante/matriculas/:idMatricula', MatriculaController.pegarMatricula)
+  .get('/pessoas/:idEstudante/matriculas', MatriculaController.pegarMatriculasDeEstudante)
   .post('/pessoas/:idEstudante/matriculas', MatriculaController.criarMatricula)
   .post('/pessoas/:id/matriculas/restaurar', MatriculaController.restaurarMatricula)
   .put('/pessoas/:idEstudante/matriculas/:idMatricula', MatriculaController.atualizarMatricula)
