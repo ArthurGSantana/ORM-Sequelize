@@ -4,6 +4,7 @@ import database from '../models/index.js';
 
 const Matriculas = database.Matriculas;
 const Pessoas = database.Pessoas;
+const sequelize = database.sequelize;
 
 class MatriculaController {
 
@@ -170,7 +171,35 @@ class MatriculaController {
 
     } catch(error) {
       return res.status(500)
-        .json({message: `${error.message} - Erro ao buscar Matriculas por Turma!`});
+        .json({message: `${error.message} - Erro ao buscar Turmas com lotação!`});
+    }
+  }
+
+  static async cancelarMatriculas(req, res) {
+    const {idEstudante} = req.params;
+
+    try {
+      sequelize.transaction(async t => {
+        await Pessoas.update({ativo: false}, {
+          where: {
+            id: Number(idEstudante)
+          }
+        }, {transaction: t})
+  
+        await Matriculas.update({status: 'cancelado'}, {
+          where: {
+            estudante_id: Number(idEstudante)
+          }
+        }, {transaction: t})
+  
+        return res.status(200).json({
+          message: `Matriculas canceladas do ID Estudante ${idEstudante}`
+        })
+      })
+
+    } catch(error) {
+      return res.status(500)
+        .json({message: `${error.message} - Erro ao cancelar Matriculas!`});
     }
   }
 }
