@@ -1,3 +1,5 @@
+import Sequelize from 'sequelize';
+
 import database from '../models/index.js';
 
 const Matriculas = database.Matriculas;
@@ -127,6 +129,48 @@ class MatriculaController {
     } catch(error) {
       return res.status(500)
         .json({message: `${error.message} - Erro ao buscar Matriculas do Estudante!`});
+    }
+  }
+
+  static async pegarMatriculasPorTurma(req, res) {
+    const {idTurma} = req.params;
+
+    try {
+      const matriculas = await Matriculas.findAndCountAll({
+        where: {
+          turma_id: Number(idTurma),
+          status: 'confirmado'
+        },
+        limit: 10, //limita quantidade de resultados (count ainda retorna o total)
+        order: [['estudante_id', 'DESC']] //ordena de acordo com a coluna passada e o tipo de ordenação
+      })
+
+      return res.status(200).json(matriculas);
+
+    } catch(error) {
+      return res.status(500)
+        .json({message: `${error.message} - Erro ao buscar Matriculas por Turma!`});
+    }
+  }
+
+  static async pegarTurmasLotadas(req, res) {
+    const lotacaoTurma = 2;
+
+    try {
+      const turmasLotadas = await Matriculas.findAndCountAll({
+        where: {
+          status: 'confirmado'
+        },
+        attributes: ['turma_id'], //exibe apenas o atribtuo selecionado
+        group: ['turma_id'], //faz o agrupamento pelo atributo selecionado
+        having: Sequelize.literal(`count(turma_id) >= ${lotacaoTurma}`) //adiciona literais ao comando do sequelize
+      })
+
+      return res.status(200).json(turmasLotadas);
+
+    } catch(error) {
+      return res.status(500)
+        .json({message: `${error.message} - Erro ao buscar Matriculas por Turma!`});
     }
   }
 }
