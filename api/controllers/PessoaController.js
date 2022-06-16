@@ -1,12 +1,16 @@
+import service from './../services/index.js';
 import database from '../models/index.js';
 
+const PessoasService = service.PessoasService
 const Pessoas = database.Pessoas;
+
+const PessoasServices = new PessoasService();
 
 class PessoaController {
 
   static async pegaTodasAsPessoasAtivas(req, res) {
     try {
-      const pessoas = await Pessoas.findAll();
+      const pessoas = await PessoasServices.pegaRegistrosAtivos();
       return res.status(200).json(pessoas);
 
     } catch(error) {
@@ -17,7 +21,7 @@ class PessoaController {
 
   static async pegaTodasAsPessoas(req, res) {
     try {
-      const pessoas = await Pessoas.scope('todos').findAll();
+      const pessoas = await PessoasServices.pegaTodosOsRegistros();
       return res.status(200).json(pessoas);
 
     } catch(error) {
